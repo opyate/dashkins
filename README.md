@@ -9,30 +9,40 @@ your choosing. Ideal for powering dashboards.
 
 # Usage
 
+## Download
+
 From your Jenkins job, define an `Execute Script` step which downloads the
 script into your workspace:
 
-    curl -o https://raw.githubusercontent.com/opyate/dashkins/master/da.sh
+    curl -O https://raw.githubusercontent.com/opyate/dashkins/master/da.sh
+    chmod +x da.sh
 
 
 The app can choose to have a [.da.sh](.da.sh) file in the root of the project
 which will populate the `app` key in the resulting JSON before submitting it to
 the key-value store.
 
-# Environment variables
+## Run
 
-## CURL_KV
+Then run the script, providing the `curl` parameters responsible for
+authentication (if required) and the location of the key-value store:
 
-Set `CURL_KV` to the sub-section of the `curl` command responsible for
-authentication and the location of the key-value store.
+    ./da.sh -u mykvusername:mykvpassword http://mykvstore.example.org/api/$JOB_NAME
 
-Example:
+Or without authentication:
 
-    -u mykvusername:mykvpassword http://mykvstore.example.org/api/$JOB_NAME
+    ./da.sh http://mykvstore.example.org/api/$JOB_NAME
+
+Alternatively, set an environment variable called `CURL_KV` and set it to the
+values above:
+
+    export CURL_KV="-u mykvusername:mykvpassword http://mykvstore.example.org/api/$JOB_NAME"
+    ./da.sh
 
 Example without authentication, which is really just the location:
 
-    http://mykvstore.example.org/api/$JOB_NAME
+    export CURL_KV="http://mykvstore.example.org/api/$JOB_NAME"
+    ./da.sh
 
 # Other
 

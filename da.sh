@@ -14,7 +14,6 @@ fi
 # run it and capture its' value.
 APP=null
 if [ -e .da.sh ] && [ -x .da.sh ] ; then
-  echo ".da.sh exists and is exec. Executing..."
   APP=$(./.da.sh)
 fi
 
